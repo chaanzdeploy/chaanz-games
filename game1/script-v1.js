@@ -1,89 +1,75 @@
 'use strict';
 
-// Get all references of HTML nodes
-const check = document.querySelector('.check');
-const again = document.querySelector('.again');
-const guess = document.querySelector('.guess');
-const message = document.querySelector('.message');
-const score = document.querySelector('.score');
-const number = document.querySelector('.number');
-const body = document.querySelector('body');
-const highscore = document.querySelector('.highscore');
-
-
 const myInfo = function() {
     swal("Non-Responsive Webpage", "Hello User, Currently website is not responsive. Thus it is recommended not to play the game from your mobile for better experience!.", "warning");
 }
 
-const updateDOM = function(domEle, text) {
-    domEle.textContent = text;
-}
-
-/**
- *      State variables - score, highScore, secretNumber
- *      
- */
-
 // Secret Number
 let secretNumber = Math.trunc(Math.random() * 20) + 1;
 // console.log(secretNumber);
-
 // Score Variable
 let theScore = 20;
 
 // Highscore
 let highScore = 0;
 
+let check = document.querySelector('.check');
+let again = document.querySelector('.again');
+
+
 const checkOnClick = function() {
 
+    const guess = document.querySelector('.guess');
     const guessedValue = Number(guess.value);
+    const message = document.querySelector('.message');
 
     if (guessedValue) {
-        // if Truthy Value
+        // Truthy Value
         console.log(`Guessed Value: ${guessedValue}`);
+        const score = document.querySelector('.score');
 
         // Game Won!
         if (guessedValue === secretNumber) {
             // alert('You Guessed it!!');
-            updateDOM(message, 'You guessed the number!!');
-            updateDOM(number, guessedValue);
-            body.style.backgroundColor = 'green';
-            number.style.width = '30rem';
+            message.textContent = 'You guessed the number!!';
+            const number = document.querySelector('.number');
+            number.textContent = guessedValue;
+            // document.querySelector('body').style.backgroundColor = '#green';
+            document.querySelector('body').style.backgroundColor = 'green';
+            document.querySelector('.number').style.width = '30rem';
 
-            // Disable check button
-            check.disabled = true;
-
-            // Update Highscore
             if (theScore > highScore) {
                 highScore = theScore;
-                updateDOM(highscore, highScore)
+                document.querySelector('.highscore').textContent = highScore;
             }
         } else if (guessedValue > secretNumber) {
-            updateDOM(message, 'Too High!!')
+            message.textContent = 'Too High!!';
             theScore -= 1;
-            updateDOM(score, theScore);
+            score.textContent = theScore;
         } else {
-            updateDOM(message, 'Too Low!!')
+            message.textContent = 'Too Low!!';
             theScore -= 1;
-            updateDOM(score, theScore);
+            score.textContent = theScore;
         }
     } else console.log('Please enter a valid number between 1 and 20'); // Falsy value
 
     if (theScore == 0) {
         alert('Game Over!');
-        updateDOM(message, 'Game Over!');
-        // Disable the button on game over. Else score goes negative.
-        check.disabled = true;
-        body.style.backgroundColor = 'red';
+        message.textContent = 'Game Over!'
+            // Disable the button on game over. Else score goes negative.
+        document.querySelector('.check').disabled = true;
+        document.querySelector('body').style.backgroundColor = 'red';
 
         // displaySecretNumber();
+        const number = document.querySelector('.number');
         number.style.width = '300px';
-        updateDOM(number, secretNumber);
+        number.textContent = secretNumber;
     }
 };
 
 const againOnClick = function() {
     // Clear the number input field
+    const guess = document.querySelector('.guess');
     guess.value = '';
 
     // Clear Console
@@ -94,23 +80,28 @@ const againOnClick = function() {
     // console.log(secretNumber);
 
     // Reset Score
+    const score = document.querySelector('.score');
     theScore = 20;
-    updateDOM(score, theScore);
+    score.textContent = theScore;
 
     // Enable the button if disabled
+    const check = document.querySelector('.check');
     if (check.disabled) {
         check.disabled = false;
     }
 
     // Change backgroundColor to black
-    body.style.backgroundColor = '#222';
+    document.querySelector('body').style.backgroundColor = '#222';
 
     // Display initial message
-    updateDOM(message, 'Start guessing...');
+    const message = document.querySelector('.message');
+    message.textContent = 'Start guessing...'
 
     // Set number back to ?
-    updateDOM(number, '?');
+    const number = document.querySelector('.number');
+    number.textContent = '?';
     number.style.width = '15rem';
+
 };
 
 check.addEventListener('click', checkOnClick);
