@@ -1,2 +1,2 @@
-# guess-my-number
-A simple Javascript game
+# Chaanz Games!
+A collection of simple Javascript games
