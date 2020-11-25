@@ -1,5 +1,7 @@
 'use strict';
 
+swal("Non-Responsive Webpage", "Hello User, Currently website is not responsive. Thus it is recommended not to play the game from your mobile for better experience!.", "warning");
+
 const btnNew = document.querySelector('.btn--new');
 const btnRoll = document.querySelector('.btn--roll');
 const btnHold = document.querySelector('.btn--hold');
